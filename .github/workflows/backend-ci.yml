@@ -1,0 +1,33 @@
+name: Backend Security & Lint
+
+on:
+  push:
+    paths:
+      - 'backend/**'
+  pull_request:
+    paths:
+      - 'backend/**'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Security Scan
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Dependency Audit
+        run: |
+          if [ -f "backend/package.json" ]; then
+            cd backend && npm audit
+          fi
+
+      - name: Linting
+        run: |
+          if [ -f "backend/package.json" ]; then
+            cd backend && npm install && npm run lint
+          fi

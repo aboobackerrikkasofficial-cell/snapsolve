@@ -1,0 +1,89 @@
+# ----------------------------------------------------------------------------
+# SNAPSOLVE AI - ENTERPRISE GITIGNORE
+# ----------------------------------------------------------------------------
+
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+*.bak
+*.tmp
+*.temp
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+out/
+
+# Visual Studio Code related
+.vscode/
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/settings.json
+*.code-workspace
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+.packages
+node_modules/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android related
+/android/app/debug
+/android/app/profile
+/android/app/release
+/android/local.properties
+/android/key.properties
+/android/app/**/google-services.json
+*.keystore
+*.jks
+
+# iOS related
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GoogleService-Info.plist
+**/ios/Flash/Generated.xcconfig
+**/ios/Flash/flutter_export_environment.sh
+**/ios/.generated/
+
+# Secrets & Environment
+.env
+.env.*
+!.env.example
+secrets.json
+auth_config.json
+
+# Backend Specific (Node/Python/Docker)
+backend/node_modules/
+backend/dist/
+backend/build/
+backend/.env
+backend/venv/
+backend/__pycache__/
+docker-compose.override.yml
+
+# Test coverage
+coverage/
+*.lcov

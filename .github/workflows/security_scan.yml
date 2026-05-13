@@ -1,0 +1,38 @@
+name: Enterprise Security Scan
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security_scan:
+    name: DevSecOps Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # 1. Detect Secrets in Code
+      - name: Gitleaks Scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 2. Audit Dependencies (Python)
+      - name: Python Safety Audit
+        run: |
+          pip install safety
+          safety check -r backend/requirements.txt
+
+      # 3. Static Analysis Security Testing (SAST)
+      - name: Bandit Security Scan
+        run: |
+          pip install bandit
+          bandit -r backend/app -ll
+
+      # 4. Flutter/Dart Vulnerability Scan
+      - name: Dart Dependency Audit
+        run: |
+          flutter pub pub get
+          flutter pub pub outdated --mode=security

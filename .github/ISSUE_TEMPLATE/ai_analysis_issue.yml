@@ -1,0 +1,24 @@
+name: AI Analysis Issue
+description: Report an incorrect or biased AI diagnosis.
+labels: ["ai-feedback", "low-confidence"]
+body:
+  - type: textarea
+    id: original-diagnosis
+    attributes:
+      label: Original Diagnosis
+      description: What did the AI say?
+  - type: textarea
+    id: expected-diagnosis
+    attributes:
+      label: Expected Diagnosis
+      description: What should the AI have said?
+  - type: textarea
+    id: sample-screenshot
+    attributes:
+      label: Sample Screenshot (Link/Base64)
+      description: Provide the screenshot that caused the issue.
+  - type: textarea
+    id: context
+    attributes:
+      label: Technical Context
+      description: Which model was used? (Gemini/Groq/OpenRouter)
