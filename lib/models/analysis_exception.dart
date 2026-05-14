@@ -6,6 +6,8 @@ enum AnalysisFailureReason {
   imageProcessingFailed,
   ocrFailed,
   unauthorized,
+  invalidApiKey,
+  safetyFilterBlocked,
   unknown,
 }
 
@@ -27,5 +29,15 @@ class AnalysisException implements Exception {
   });
 
   @override
-  String toString() => 'AnalysisException: $message (Reason: $reason, Stage: $debugStage)';
+  String toString() =>
+      'AnalysisException: $message (Reason: $reason, Stage: $debugStage)';
+
+  String get diagnosticSummary {
+    final buffer = StringBuffer();
+    buffer.writeln('Exception: $message');
+    buffer.writeln('Reason: $reason');
+    if (debugStage != null) buffer.writeln('Stage: $debugStage');
+    if (originalError != null) buffer.writeln('Original: $originalError');
+    return buffer.toString();
+  }
 }

@@ -38,14 +38,16 @@ class PremiumImageViewer extends StatelessWidget {
               child: Container(color: Colors.black.withOpacity(0.85)),
             ),
           ),
-          
+
           // Image Gallery
           PhotoViewGallery.builder(
             scrollPhysics: const BouncingScrollPhysics(),
             builder: (BuildContext context, int index) {
               final url = imageUrls[index];
               return PhotoViewGalleryPageOptions(
-                imageProvider: kIsWeb ? NetworkImage(url) : FileImage(io.File(url)) as ImageProvider,
+                imageProvider: kIsWeb
+                    ? NetworkImage(url)
+                    : FileImage(io.File(url)) as ImageProvider,
                 initialScale: PhotoViewComputedScale.contained,
                 minScale: PhotoViewComputedScale.contained,
                 maxScale: PhotoViewComputedScale.covered * 4.1,
@@ -57,7 +59,8 @@ class PremiumImageViewer extends StatelessWidget {
               child: CircularProgressIndicator(color: Color(0xFF6C63FF)),
             ),
             pageController: PageController(initialPage: initialIndex),
-            backgroundDecoration: const BoxDecoration(color: Colors.transparent),
+            backgroundDecoration:
+                const BoxDecoration(color: Colors.transparent),
           ),
 
           // Controls
@@ -70,7 +73,8 @@ class PremiumImageViewer extends StatelessWidget {
               children: [
                 if (imageUrls.length > 1)
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(20),
@@ -78,7 +82,8 @@ class PremiumImageViewer extends StatelessWidget {
                     ),
                     child: Text(
                       '${initialIndex + 1} / ${imageUrls.length}',
-                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                   ),
               ],

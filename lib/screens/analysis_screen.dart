@@ -58,7 +58,8 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
       timestamp: DateTime.now(),
       language: language,
       deviceInfo: {
-        'platform': kIsWeb ? 'web' : (io.Platform.isAndroid ? 'android' : 'ios'),
+        'platform':
+            kIsWeb ? 'web' : (io.Platform.isAndroid ? 'android' : 'ios'),
         'version': '1.0.0',
       },
     );
@@ -73,7 +74,8 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
     provider.improveAnalysis(
       original: result,
       feedback: feedback,
-      primaryImage: widget.imageFile ?? (kIsWeb ? result.imageUrl : io.File(result.imageUrl)),
+      primaryImage: widget.imageFile ??
+          (kIsWeb ? result.imageUrl : io.File(result.imageUrl)),
       language: language,
     );
   }
@@ -84,9 +86,12 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
       PageRouteBuilder(
         opaque: false,
         barrierDismissible: true,
-        pageBuilder: (context, _, __) => PremiumImageViewer(imageUrls: urls, initialIndex: index),
+        pageBuilder: (context, _, __) =>
+            PremiumImageViewer(imageUrls: urls, initialIndex: index),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return FadeTransition(opacity: animation, child: ScaleTransition(scale: animation, child: child));
+          return FadeTransition(
+              opacity: animation,
+              child: ScaleTransition(scale: animation, child: child));
         },
       ),
     );
@@ -95,13 +100,14 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    
+
     return Scaffold(
       backgroundColor: const Color(0xFF0F0F1E),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(l10n.aiAnalysis, style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(l10n.aiAnalysis,
+            style: const TextStyle(fontWeight: FontWeight.bold)),
         actions: [
           IconButton(
             icon: const Icon(Icons.share_rounded),
@@ -112,7 +118,8 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
       body: Consumer<AnalysisProvider>(
         builder: (context, provider, child) {
           if (provider.isAnalyzing) {
-            return _buildLoadingState(provider.loadingMessage, provider.retryCount);
+            return _buildLoadingState(
+                provider.loadingMessage, provider.retryCount);
           }
 
           if (provider.error != null) {
@@ -148,7 +155,9 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
   }
 
   Widget _buildCompactPremiumPreviewCard() {
-    final imageUrl = widget.imageFile is XFile ? (widget.imageFile as XFile).path : widget.imageFile.toString();
+    final imageUrl = widget.imageFile is XFile
+        ? (widget.imageFile as XFile).path
+        : widget.imageFile.toString();
     return Hero(
       tag: 'preview',
       child: Container(
@@ -156,13 +165,16 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
-          boxShadow: [BoxShadow(color: const Color(0xFF6C63FF).withOpacity(0.1), blurRadius: 20)],
+          boxShadow: [
+            BoxShadow(
+                color: const Color(0xFF6C63FF).withOpacity(0.1), blurRadius: 20)
+          ],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(24),
-          child: kIsWeb 
-            ? Image.network(imageUrl, fit: BoxFit.cover)
-            : Image.file(io.File(imageUrl), fit: BoxFit.cover),
+          child: kIsWeb
+              ? Image.network(imageUrl, fit: BoxFit.cover)
+              : Image.file(io.File(imageUrl), fit: BoxFit.cover),
         ),
       ),
     );
@@ -181,17 +193,20 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
         children: [
           const Text(
             'What happened?',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+            style: TextStyle(
+                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
           ),
           const SizedBox(height: 8),
           Text(
             'Add context to help the AI recover your app faster.',
-            style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.5)),
+            style:
+                TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.5)),
           ),
           const SizedBox(height: 24),
           ProblemDescriptionInput(
             buttonText: 'Start AI Recovery',
-            hintText: 'e.g. "Only happens on WiFi" or "Login works on another phone"',
+            hintText:
+                'e.g. "Only happens on WiFi" or "Login works on another phone"',
             onSubmitted: (val) => _startInitialAnalysis(val),
           ),
         ],
@@ -200,7 +215,8 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
   }
 
   void _shareResult(BuildContext context) {
-    PremiumSnackbar.show(context, message: context.l10n.sharingFeature, isError: false);
+    PremiumSnackbar.show(context,
+        message: context.l10n.sharingFeature, isError: false);
   }
 
   Widget _buildLoadingState(String message, int retryCount) {
@@ -209,7 +225,8 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PremiumShimmer(width: double.infinity, height: 250, borderRadius: 24),
+          const PremiumShimmer(
+              width: double.infinity, height: 250, borderRadius: 24),
           const SizedBox(height: 32),
           const PremiumShimmer(width: 150, height: 24),
           const SizedBox(height: 16),
@@ -218,10 +235,22 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
           Center(
             child: Column(
               children: [
-                const SizedBox(width: 40, height: 40, child: CircularProgressIndicator(color: Color(0xFF6C63FF), strokeWidth: 3)),
+                const SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: CircularProgressIndicator(
+                        color: Color(0xFF6C63FF), strokeWidth: 3)),
                 const SizedBox(height: 24),
-                Text(context.translateKey(message), textAlign: TextAlign.center, style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600)),
-                if (retryCount > 0) Text('Automatic Retry #$retryCount...', style: const TextStyle(color: Colors.orangeAccent, fontSize: 13)),
+                Text(context.translateKey(message),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600)),
+                if (retryCount > 0)
+                  Text('Automatic Retry #$retryCount...',
+                      style: const TextStyle(
+                          color: Colors.orangeAccent, fontSize: 13)),
               ],
             ),
           ),
@@ -241,69 +270,58 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
           const SizedBox(height: 24),
 
           _buildCompactPremiumPreview(result),
-          
+
           const SizedBox(height: 32),
 
-          // EXPERT RECOVERY HERO
-          _ExpertRecoveryHeroCard(result: result),
+          // Refinement Section
+          _ExpandableRefinementPanel(onSubmitted: _refineResult),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 32),
 
-          // WHAT'S ACTUALLY HAPPENING
+          // 1. Diagnosis
           _ResultInfoSection(
-            title: 'What\'s Actually Happening',
+            title: 'Diagnosis',
             content: result.issue,
-            icon: Icons.psychology_rounded,
-            color: Colors.purpleAccent,
+            icon: Icons.auto_awesome_rounded,
+            color: Colors.blueAccent,
             delay: const Duration(milliseconds: 100),
           ),
 
           const SizedBox(height: 24),
 
-          // RANKED HYPOTHESES
-          if (result.hypotheses != null && result.hypotheses!.isNotEmpty)
-            _HypothesisEngineSection(hypotheses: result.hypotheses!, delay: const Duration(milliseconds: 200)),
-
-          const SizedBox(height: 24),
-
-          // STEP-BY-STEP RECOVERY
-          _StepsSection(steps: result.steps, delay: const Duration(milliseconds: 300)),
-
-          const SizedBox(height: 24),
-
-          // ALTERNATIVE FIXES
-          if (result.alternativeFixes.isNotEmpty)
-            _TieredFixesSection(fixes: result.alternativeFixes, delay: const Duration(milliseconds: 400)),
-
-          const SizedBox(height: 24),
-
-          // WHAT NOT TO DO
-          _WarningSection(content: result.whatNotToDo, delay: const Duration(milliseconds: 500)),
-
-          const SizedBox(height: 32),
-
-          // Refinement Section
-          Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.02),
-              borderRadius: BorderRadius.circular(28),
-              border: Border.all(color: Colors.white.withOpacity(0.05)),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Need specialized advice?', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 16),
-                ProblemDescriptionInput(
-                  buttonText: 'Refine Recovery Plan',
-                  hintText: 'Describe exactly what happened after you tried the fixes...',
-                  onSubmitted: _refineResult,
-                ),
-              ],
-            ),
+          // 2. Meaning
+          _ResultInfoSection(
+            title: 'What it means',
+            content: result.meaning,
+            icon: Icons.info_outline_rounded,
+            color: Colors.purpleAccent,
+            delay: const Duration(milliseconds: 200),
           ),
-          
+
+          const SizedBox(height: 24),
+
+          // 3. Root Cause
+          _ResultInfoSection(
+            title: 'Technical Reason',
+            content: result.reason,
+            icon: Icons.psychology_outlined,
+            color: Colors.greenAccent,
+            delay: const Duration(milliseconds: 300),
+          ),
+
+          const SizedBox(height: 24),
+
+          // 4. Recovery Steps
+          _StepsSection(
+              steps: result.steps, delay: const Duration(milliseconds: 400)),
+
+          const SizedBox(height: 24),
+
+          // 5. Warning
+          _WarningSection(
+              content: result.whatNotToDo,
+              delay: const Duration(milliseconds: 500)),
+
           const SizedBox(height: 60),
         ],
       ),
@@ -320,7 +338,8 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
       ),
       child: Row(
         children: [
-          const Icon(Icons.verified_user_rounded, color: Colors.greenAccent, size: 24),
+          const Icon(Icons.verified_user_rounded,
+              color: Colors.greenAccent, size: 24),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -328,11 +347,15 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
               children: [
                 Text(
                   'Expert Recovery Mode Active (${(result.confidence ?? 0.8 * 100).toInt()}% Reliability)',
-                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 13),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 13),
                 ),
                 Text(
                   'Verified by SnapSolve Senior Engineering Intelligence',
-                  style: TextStyle(fontSize: 10, color: Colors.white.withOpacity(0.5)),
+                  style: TextStyle(
+                      fontSize: 10, color: Colors.white.withOpacity(0.5)),
                 ),
               ],
             ),
@@ -358,10 +381,24 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
               child: Stack(
                 children: [
                   Positioned.fill(
-                    child: kIsWeb ? Image.network(result.imageUrl, fit: BoxFit.cover) : Image.file(io.File(result.imageUrl), fit: BoxFit.cover),
+                    child: kIsWeb
+                        ? Image.network(result.imageUrl, fit: BoxFit.cover)
+                        : Image.file(io.File(result.imageUrl),
+                            fit: BoxFit.cover),
                   ),
-                  Positioned.fill(child: Container(decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.transparent, Colors.black.withOpacity(0.4)])))),
-                  const Center(child: Icon(Icons.zoom_in_rounded, color: Colors.white, size: 40)),
+                  Positioned.fill(
+                      child: Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                        Colors.transparent,
+                        Colors.black.withOpacity(0.4)
+                      ])))),
+                  const Center(
+                      child: Icon(Icons.zoom_in_rounded,
+                          color: Colors.white, size: 40)),
                 ],
               ),
             ),
@@ -369,193 +406,6 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
         ),
       ),
     );
-  }
-}
-
-class _ExpertRecoveryHeroCard extends StatelessWidget {
-  final AnalysisResult result;
-  const _ExpertRecoveryHeroCard({required this.result});
-
-  @override
-  Widget build(BuildContext context) {
-    return Animate(
-      child: Container(
-        padding: const EdgeInsets.all(28),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [const Color(0xFF6C63FF).withOpacity(0.15), const Color(0xFF00D2FF).withOpacity(0.05)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(32),
-          border: Border.all(color: const Color(0xFF6C63FF).withOpacity(0.3)),
-          boxShadow: [
-            BoxShadow(color: const Color(0xFF6C63FF).withOpacity(0.05), blurRadius: 40, spreadRadius: -10),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('BEST FIX FIRST', style: TextStyle(color: Color(0xFF6C63FF), fontWeight: FontWeight.w900, fontSize: 11, letterSpacing: 1.5)),
-            const SizedBox(height: 16),
-            Text(
-              result.mostLikelyFix,
-              style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold, height: 1.3),
-            ),
-            const SizedBox(height: 24),
-            const Text('MOST LIKELY CAUSE', style: TextStyle(color: Colors.white30, fontWeight: FontWeight.bold, fontSize: 10, letterSpacing: 1)),
-            const SizedBox(height: 8),
-            Text(
-              result.reason,
-              style: const TextStyle(color: Colors.white70, fontSize: 15, height: 1.5),
-            ),
-          ],
-        ),
-      ),
-    ).fadeIn().slideY(begin: 0.1, end: 0);
-  }
-}
-
-class _HypothesisEngineSection extends StatelessWidget {
-  final List<AnalysisHypothesis> hypotheses;
-  final Duration delay;
-  const _HypothesisEngineSection({required this.hypotheses, required this.delay});
-
-  @override
-  Widget build(BuildContext context) {
-    return Animate(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('RANKED INTELLIGENT DIAGNOSIS', style: TextStyle(color: Colors.white30, fontWeight: FontWeight.bold, fontSize: 11, letterSpacing: 1)),
-          const SizedBox(height: 16),
-          ...hypotheses.asMap().entries.map((e) => Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: Container(
-              padding: const EdgeInsets.all(18),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.02),
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.white.withOpacity(0.05)),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          e.key == 0 ? 'Primary Theory' : (e.key == 1 ? 'Possible Cause' : 'Alternative Path'),
-                          style: TextStyle(color: e.key == 0 ? Colors.blueAccent : Colors.white30, fontSize: 10, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(e.value.description, style: const TextStyle(color: Colors.white, fontSize: 14, height: 1.4)),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  _ProbabilityIndicator(probability: e.value.probability),
-                ],
-              ),
-            ),
-          )),
-        ],
-      ),
-    ).fadeIn(delay: delay);
-  }
-}
-
-class _ProbabilityIndicator extends StatelessWidget {
-  final double probability;
-  const _ProbabilityIndicator({required this.probability});
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        SizedBox(
-          width: 40,
-          height: 40,
-          child: CircularProgressIndicator(
-            value: probability,
-            strokeWidth: 3,
-            backgroundColor: Colors.white.withOpacity(0.05),
-            valueColor: AlwaysStoppedAnimation<Color>(
-              probability > 0.7 ? Colors.blueAccent : Colors.white24,
-            ),
-          ),
-        ),
-        Text('${(probability * 100).toInt()}%', style: const TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold)),
-      ],
-    );
-  }
-}
-
-class _TieredFixesSection extends StatelessWidget {
-  final List<String> fixes;
-  final Duration delay;
-  const _TieredFixesSection({required this.fixes, required this.delay});
-
-  @override
-  Widget build(BuildContext context) {
-    return Animate(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('ALTERNATIVE RECOVERY OPTIONS', style: TextStyle(color: Colors.white30, fontWeight: FontWeight.bold, fontSize: 11, letterSpacing: 1)),
-          const SizedBox(height: 16),
-          ...fixes.map((f) => Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(color: Colors.white.withOpacity(0.02), borderRadius: BorderRadius.circular(18), border: Border.all(color: Colors.white.withOpacity(0.05))),
-              child: Row(
-                children: [
-                  const Icon(Icons.check_circle_outline_rounded, color: Colors.blueAccent, size: 18),
-                  const SizedBox(width: 16),
-                  Expanded(child: Text(f, style: const TextStyle(color: Colors.white70, fontSize: 14))),
-                ],
-              ),
-            ),
-          )),
-        ],
-      ),
-    ).fadeIn(delay: delay);
-  }
-}
-
-class _WarningSection extends StatelessWidget {
-  final String content;
-  final Duration delay;
-  const _WarningSection({required this.content, required this.delay});
-
-  @override
-  Widget build(BuildContext context) {
-    return Animate(
-      child: Container(
-        padding: const EdgeInsets.all(24),
-        decoration: BoxDecoration(
-          color: Colors.redAccent.withOpacity(0.05),
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: Colors.redAccent.withOpacity(0.1)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Row(
-              children: [
-                Icon(Icons.gpp_maybe_rounded, color: Colors.redAccent, size: 20),
-                SizedBox(width: 12),
-                Text('WHAT NOT TO DO', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 12)),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Text(content, style: const TextStyle(color: Colors.white70, fontSize: 14, height: 1.6)),
-          ],
-        ),
-      ),
-    ).fadeIn(delay: delay);
   }
 }
 
@@ -566,7 +416,12 @@ class _ResultInfoSection extends StatelessWidget {
   final Color color;
   final Duration delay;
 
-  const _ResultInfoSection({required this.title, required this.content, required this.icon, required this.color, required this.delay});
+  const _ResultInfoSection(
+      {required this.title,
+      required this.content,
+      required this.icon,
+      required this.color,
+      required this.delay});
 
   @override
   Widget build(BuildContext context) {
@@ -581,11 +436,19 @@ class _ResultInfoSection extends StatelessWidget {
                 children: [
                   Icon(icon, color: color, size: 24),
                   const SizedBox(width: 14),
-                  Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: color)),
+                  Text(title,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: color)),
                 ],
               ),
               const SizedBox(height: 18),
-              Text(content, style: TextStyle(fontSize: 15, color: Colors.white.withOpacity(0.9), height: 1.7)),
+              Text(content,
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white.withOpacity(0.9),
+                      height: 1.7)),
             ],
           ),
         ),
@@ -610,33 +473,213 @@ class _StepsSection extends StatelessWidget {
             children: [
               const Row(
                 children: [
-                  Icon(Icons.auto_fix_high_rounded, color: Colors.greenAccent, size: 24),
+                  Icon(Icons.auto_fix_high_rounded,
+                      color: Colors.greenAccent, size: 24),
                   const SizedBox(width: 14),
-                  Text('Step-by-Step Recovery', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.greenAccent)),
+                  Text('Step-by-Step Recovery',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.greenAccent)),
                 ],
               ),
               const SizedBox(height: 28),
               ...steps.asMap().entries.map((e) => Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 28,
-                      height: 28,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(color: Colors.greenAccent.withOpacity(0.1), shape: BoxShape.circle),
-                      child: Text('${e.key + 1}', style: const TextStyle(color: Colors.greenAccent, fontWeight: FontWeight.bold, fontSize: 13)),
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 28,
+                          height: 28,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Colors.greenAccent.withOpacity(0.1),
+                              shape: BoxShape.circle),
+                          child: Text('${e.key + 1}',
+                              style: const TextStyle(
+                                  color: Colors.greenAccent,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13)),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                            child: Text(e.value,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    height: 1.6))),
+                      ],
                     ),
-                    const SizedBox(width: 16),
-                    Expanded(child: Text(e.value, style: const TextStyle(color: Colors.white, fontSize: 15, height: 1.6))),
-                  ],
-                ),
-              )),
+                  )),
             ],
           ),
         ),
       ),
     ).fadeIn(delay: delay);
+  }
+}
+
+class _WarningSection extends StatelessWidget {
+  final String? content;
+  final Duration delay;
+  const _WarningSection({required this.content, required this.delay});
+
+  @override
+  Widget build(BuildContext context) {
+    if (content == null || content!.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Animate(
+      child: Container(
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Colors.orangeAccent.withOpacity(0.05),
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: Colors.orangeAccent.withOpacity(0.1)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Row(
+              children: [
+                Icon(Icons.warning_amber_rounded,
+                    color: Colors.orangeAccent, size: 20),
+                SizedBox(width: 12),
+                const Text('CRITICAL PRECAUTIONS',
+                    style: TextStyle(
+                        color: Colors.orangeAccent,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                        letterSpacing: 0.5)),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Text(content!,
+                style: const TextStyle(
+                    color: Colors.white70, fontSize: 14, height: 1.6)),
+          ],
+        ),
+      ),
+    ).fadeIn(delay: delay);
+  }
+}
+
+class _ExpandableRefinementPanel extends StatefulWidget {
+  final Function(String) onSubmitted;
+
+  const _ExpandableRefinementPanel({required this.onSubmitted});
+
+  @override
+  State<_ExpandableRefinementPanel> createState() =>
+      _ExpandableRefinementPanelState();
+}
+
+class _ExpandableRefinementPanelState
+    extends State<_ExpandableRefinementPanel> {
+  bool _isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.02),
+        borderRadius: BorderRadius.circular(28),
+        border: Border.all(color: Colors.white.withOpacity(0.05)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          InkWell(
+            onTap: () => setState(() => _isExpanded = !_isExpanded),
+            borderRadius: BorderRadius.circular(28),
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Need a more accurate fix?',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          'Add extra details to improve AI troubleshooting accuracy.',
+                          style: TextStyle(color: Colors.white70, fontSize: 13),
+                        ),
+                        if (!_isExpanded) ...[
+                          const SizedBox(height: 12),
+                          Row(
+                            children: [
+                              const Icon(Icons.touch_app_rounded,
+                                  color: Colors.blueAccent, size: 14),
+                              const SizedBox(width: 6),
+                              Expanded(
+                                child: const Text(
+                                  'Tap to explain what happened after trying the fixes',
+                                  style: TextStyle(
+                                      color: Colors.blueAccent,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ],
+                          )
+                              .animate(
+                                  onPlay: (controller) =>
+                                      controller.repeat(reverse: true))
+                              .fade(
+                                  begin: 0.6,
+                                  end: 1.0,
+                                  duration: const Duration(milliseconds: 1000)),
+                        ],
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  AnimatedRotation(
+                    turns: _isExpanded ? 0.5 : 0.0,
+                    duration: const Duration(milliseconds: 300),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.05),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.keyboard_arrow_down_rounded,
+                          color: Colors.white, size: 24),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            alignment: Alignment.topCenter,
+            child: _isExpanded
+                ? Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                    child: ProblemDescriptionInput(
+                      buttonText: 'Refine Recovery Plan',
+                      hintText:
+                          'Describe exactly what happened after you tried the fixes...',
+                      onSubmitted: widget.onSubmitted,
+                    ),
+                  )
+                : const SizedBox(width: double.infinity, height: 0),
+          ),
+        ],
+      ),
+    );
   }
 }

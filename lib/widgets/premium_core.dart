@@ -50,18 +50,22 @@ class _PremiumButtonState extends State<PremiumButton> {
             decoration: BoxDecoration(
               color: isDisabled ? Colors.grey[300] : themeColor,
               borderRadius: BorderRadius.circular(16),
-              boxShadow: _isHovered && !isDisabled ? [
-                BoxShadow(
-                  color: themeColor.withOpacity(0.3),
-                  blurRadius: 15,
-                  offset: const Offset(0, 5),
-                )
-              ] : [],
-              gradient: !isDisabled ? LinearGradient(
-                colors: [themeColor, themeColor.withOpacity(0.8)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ) : null,
+              boxShadow: _isHovered && !isDisabled
+                  ? [
+                      BoxShadow(
+                        color: themeColor.withOpacity(0.3),
+                        blurRadius: 15,
+                        offset: const Offset(0, 5),
+                      )
+                    ]
+                  : [],
+              gradient: !isDisabled
+                  ? LinearGradient(
+                      colors: [themeColor, themeColor.withOpacity(0.8)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    )
+                  : null,
             ),
             child: Center(
               child: widget.isLoading
@@ -115,10 +119,10 @@ class PremiumShimmer extends StatelessWidget {
         ),
       ),
     ).shimmer(
-       duration: const Duration(milliseconds: 1500),
-       color: Colors.white.withOpacity(0.1),
-       angle: 45,
-     );
+      duration: const Duration(milliseconds: 1500),
+      color: Colors.white.withOpacity(0.1),
+      angle: 45,
+    );
   }
 }
 
@@ -157,7 +161,9 @@ class PremiumCard extends StatelessWidget {
     );
 
     if (animate) {
-      content = Animate(child: content).fadeIn(duration: const Duration(milliseconds: 400)).slideY(begin: 0.1, end: 0, curve: Curves.easeOutCubic);
+      content = Animate(child: content)
+          .fadeIn(duration: const Duration(milliseconds: 400))
+          .slideY(begin: 0.1, end: 0, curve: Curves.easeOutCubic);
     }
 
     return content;

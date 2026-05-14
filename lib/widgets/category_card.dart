@@ -21,9 +21,10 @@ class CategoryCard extends StatelessWidget {
           Navigator.push(
             context,
             PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) => 
+              pageBuilder: (context, animation, secondaryAnimation) =>
                   CategoryDetailScreen(category: category),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
                 return FadeTransition(opacity: animation, child: child);
               },
             ),
@@ -62,6 +63,7 @@ class CategoryCard extends StatelessWidget {
           ),
         ),
       ),
-    ).fadeIn(duration: const Duration(milliseconds: 400)).scale(delay: const Duration(milliseconds: 50), begin: const Offset(0.9, 0.9));
+    ).fadeIn(duration: const Duration(milliseconds: 400)).scale(
+        delay: const Duration(milliseconds: 50), begin: const Offset(0.9, 0.9));
   }
 }

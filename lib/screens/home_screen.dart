@@ -30,14 +30,16 @@ class _HomeScreenState extends State<HomeScreen> {
       final XFile? image = await _picker.pickImage(source: source);
       if (image != null) {
         if (!mounted) return;
-        
+
         Navigator.push(
           context,
           PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => AnalysisScreen(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                AnalysisScreen(
               imageFile: kIsWeb ? image : io.File(image.path),
             ),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
               return FadeTransition(opacity: animation, child: child);
             },
           ),
@@ -55,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final authProvider = Provider.of<AuthProvider>(context);
     final analysisProvider = Provider.of<AnalysisProvider>(context);
     final screenWidth = MediaQuery.of(context).size.width;
-    
+
     int crossAxisCount = screenWidth > 1200 ? 4 : (screenWidth > 800 ? 3 : 2);
 
     return Scaffold(
@@ -71,51 +73,67 @@ class _HomeScreenState extends State<HomeScreen> {
             elevation: 0,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
-                context.l10n.appName, 
-                style: const TextStyle(fontWeight: FontWeight.w800, letterSpacing: -0.5, color: Colors.white),
+                context.l10n.appName,
+                style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: -0.5,
+                    color: Colors.white),
               ),
               centerTitle: false,
-              titlePadding: const EdgeInsetsDirectional.only(start: 24, bottom: 20),
+              titlePadding:
+                  const EdgeInsetsDirectional.only(start: 24, bottom: 20),
             ),
             actions: [
               _NavActionIcon(
-                icon: Icons.history_rounded, 
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HistoryScreen())),
+                icon: Icons.history_rounded,
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HistoryScreen())),
               ),
               _NavActionIcon(
-                icon: Icons.settings_rounded, 
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsScreen())),
+                icon: Icons.settings_rounded,
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SettingsScreen())),
               ),
               const SizedBox(width: 12),
             ],
           ),
-          
           SliverToBoxAdapter(
             child: Center(
               child: Container(
                 constraints: const BoxConstraints(maxWidth: 1000),
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Animate(
                       child: Text(
                         '${context.l10n.hello}, ${authProvider.user?.name ?? context.l10n.guest} 👋',
-                        style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w900, color: Colors.white),
+                        style: const TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white),
                       ),
                     ).fadeIn().slideX(begin: -0.05, end: 0),
-                    
+
                     const SizedBox(height: 12),
-                    
+
                     Animate(
                       child: Text(
                         context.l10n.whatIssueSolving,
-                        style: TextStyle(fontSize: 16, color: Colors.white.withOpacity(0.5), fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white.withOpacity(0.5),
+                            fontWeight: FontWeight.w500),
                       ),
                     ).fadeIn(delay: const Duration(milliseconds: 100)),
-                    
+
                     const SizedBox(height: 40),
-                    
+
                     // Action Buttons (Ultra-Premium)
                     Row(
                       children: [
@@ -140,12 +158,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    
+
                     const SizedBox(height: 56),
-                    
-                    _SectionHeader(title: context.l10n.quickCategories, delay: const Duration(milliseconds: 200)),
+
+                    _SectionHeader(
+                        title: context.l10n.quickCategories,
+                        delay: const Duration(milliseconds: 200)),
                     const SizedBox(height: 24),
-                    
+
                     GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -158,26 +178,35 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       itemBuilder: (context, index) {
                         return RepaintBoundary(
-                          child: CategoryCard(category: CategoryRepository.categories[index]),
+                          child: CategoryCard(
+                              category: CategoryRepository.categories[index]),
                         );
                       },
                     ),
-                    
+
                     const SizedBox(height: 56),
-                    
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _SectionHeader(title: context.l10n.recentAnalyses, delay: const Duration(milliseconds: 300)),
+                        _SectionHeader(
+                            title: context.l10n.recentAnalyses,
+                            delay: const Duration(milliseconds: 300)),
                         TextButton(
-                          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HistoryScreen())),
-                          child: Text(context.l10n.viewAll, style: const TextStyle(color: Color(0xFF6C63FF), fontWeight: FontWeight.bold)),
+                          onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HistoryScreen())),
+                          child: Text(context.l10n.viewAll,
+                              style: const TextStyle(
+                                  color: Color(0xFF6C63FF),
+                                  fontWeight: FontWeight.bold)),
                         ),
                       ],
                     ),
-                    
+
                     const SizedBox(height: 20),
-                    
+
                     if (analysisProvider.history.isEmpty)
                       _buildEmptyState()
                     else
@@ -186,13 +215,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: analysisProvider.history.take(5).length,
-                          separatorBuilder: (context, index) => const SizedBox(height: 16),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 16),
                           itemBuilder: (context, index) {
-                            return RecentAnalysisCard(result: analysisProvider.history[index]);
+                            return RecentAnalysisCard(
+                                result: analysisProvider.history[index]);
                           },
                         ),
                       ).fadeIn(delay: const Duration(milliseconds: 400)),
-                    
+
                     const SizedBox(height: 120),
                   ],
                 ),
@@ -217,12 +248,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.white.withOpacity(0.02),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.auto_awesome_mosaic_rounded, size: 64, color: Colors.white.withOpacity(0.1)),
+                child: Icon(Icons.auto_awesome_mosaic_rounded,
+                    size: 64, color: Colors.white.withOpacity(0.1)),
               ),
               const SizedBox(height: 24),
               Text(
-                context.l10n.noRecentAnalyses, 
-                style: TextStyle(color: Colors.white.withOpacity(0.3), fontSize: 16, fontWeight: FontWeight.w500),
+                context.l10n.noRecentAnalyses,
+                style: TextStyle(
+                    color: Colors.white.withOpacity(0.3),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500),
               ),
             ],
           ),
@@ -266,17 +301,26 @@ class _HeroActionCard extends StatelessWidget {
                 child: Icon(icon, color: color, size: 32),
               ),
               const SizedBox(height: 24),
-              Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: Colors.white)),
+              Text(title,
+                  style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white)),
               const SizedBox(height: 6),
               Text(
-                subtitle, 
-                style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.5), fontWeight: FontWeight.w500),
+                subtitle,
+                style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white.withOpacity(0.5),
+                    fontWeight: FontWeight.w500),
               ),
             ],
           ),
         ),
       ),
-    ).fadeIn().scale(delay: const Duration(milliseconds: 150), begin: const Offset(0.95, 0.95));
+    ).fadeIn().scale(
+        delay: const Duration(milliseconds: 150),
+        begin: const Offset(0.95, 0.95));
   }
 }
 
@@ -291,7 +335,11 @@ class _SectionHeader extends StatelessWidget {
     return Animate(
       child: Text(
         title,
-        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: Colors.white, letterSpacing: -0.5),
+        style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w800,
+            color: Colors.white,
+            letterSpacing: -0.5),
       ),
     ).fadeIn(delay: delay);
   }

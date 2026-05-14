@@ -22,11 +22,15 @@ class SettingsScreen extends StatelessWidget {
 
     String getLanguageName(String code) {
       switch (code) {
-        case 'ml': return 'മലയാളം';
-        case 'hi': return 'हिन्दी';
-        case 'ta': return 'தமிழ்';
-        case 'en': 
-        default: return 'English';
+        case 'ml':
+          return 'മലയാളം';
+        case 'hi':
+          return 'हिन्दी';
+        case 'ta':
+          return 'தமிழ்';
+        case 'en':
+        default:
+          return 'English';
       }
     }
 
@@ -41,25 +45,23 @@ class SettingsScreen extends StatelessWidget {
             value: themeProvider.isDarkMode,
             onChanged: (value) => themeProvider.toggleTheme(),
           ),
-          
           _SectionHeader(title: l10n.language),
           ListTile(
             title: Text(l10n.appLanguage),
-            subtitle: Text(getLanguageName(localeProvider.locale?.languageCode ?? 'en')),
+            subtitle: Text(
+                getLanguageName(localeProvider.locale?.languageCode ?? 'en')),
             leading: const Icon(Icons.language_rounded),
             onTap: () => _showLanguageBottomSheet(context, localeProvider),
           ),
-          
           _SectionHeader(title: l10n.account),
           ListTile(
             title: Text(authProvider.user?.name ?? l10n.guest),
             subtitle: Text(authProvider.user?.email ?? l10n.connectYourAccount),
             leading: const Icon(Icons.person_rounded),
-            trailing: authProvider.user?.isGuest ?? true 
-              ? TextButton(onPressed: () {}, child: Text(l10n.signUp))
-              : null,
+            trailing: authProvider.user?.isGuest ?? true
+                ? TextButton(onPressed: () {}, child: Text(l10n.signUp))
+                : null,
           ),
-          
           _SectionHeader(title: l10n.storage),
           ListTile(
             title: Text(l10n.clearCache),
@@ -72,10 +74,10 @@ class SettingsScreen extends StatelessWidget {
           ),
           ListTile(
             title: Text(l10n.deleteAllHistory),
-            leading: const Icon(Icons.delete_outline_rounded, color: Colors.red),
+            leading:
+                const Icon(Icons.delete_outline_rounded, color: Colors.red),
             onTap: () => analysisProvider.clearHistory(),
           ),
-          
           _SectionHeader(title: l10n.about),
           ListTile(
             title: Text(l10n.privacyPolicy),
@@ -83,7 +85,8 @@ class SettingsScreen extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const PrivacyPolicyScreen()),
+                MaterialPageRoute(
+                    builder: (context) => const PrivacyPolicyScreen()),
               );
             },
           ),
@@ -93,7 +96,8 @@ class SettingsScreen extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const TermsOfServiceScreen()),
+                MaterialPageRoute(
+                    builder: (context) => const TermsOfServiceScreen()),
               );
             },
           ),
@@ -102,7 +106,6 @@ class SettingsScreen extends StatelessWidget {
             subtitle: const Text('1.0.0'),
             leading: const Icon(Icons.info_rounded),
           ),
-          
           const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -129,10 +132,11 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  void _showLanguageBottomSheet(BuildContext context, LocaleProvider localeProvider) {
+  void _showLanguageBottomSheet(
+      BuildContext context, LocaleProvider localeProvider) {
     final l10n = AppLocalizations.of(context)!;
     final currentLocale = localeProvider.locale?.languageCode ?? 'en';
-    
+
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -147,7 +151,8 @@ class SettingsScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
                   l10n.selectLanguage,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
               _LanguageOption(
@@ -200,7 +205,7 @@ class _LanguageOption extends StatelessWidget {
   Widget build(BuildContext context) {
     final isSelected = currentLocale == languageCode;
     final theme = Theme.of(context);
-    
+
     return ListTile(
       title: Text(
         title,
@@ -209,9 +214,9 @@ class _LanguageOption extends StatelessWidget {
           color: isSelected ? theme.primaryColor : null,
         ),
       ),
-      trailing: isSelected 
-        ? Icon(Icons.check_circle_rounded, color: theme.primaryColor) 
-        : null,
+      trailing: isSelected
+          ? Icon(Icons.check_circle_rounded, color: theme.primaryColor)
+          : null,
       onTap: () {
         localeProvider.setLocale(Locale(languageCode));
         Navigator.pop(context);

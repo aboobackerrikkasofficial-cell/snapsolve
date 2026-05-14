@@ -8,7 +8,6 @@ import '../localization/localization_extension.dart';
 import 'analysis_screen.dart';
 import '../widgets/premium_snackbar.dart';
 
-
 class CategoryDetailScreen extends StatelessWidget {
   final AppCategory category;
 
@@ -20,7 +19,7 @@ class CategoryDetailScreen extends StatelessWidget {
       final XFile? image = await picker.pickImage(source: source);
       if (image != null) {
         if (!context.mounted) return;
-        
+
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -32,9 +31,9 @@ class CategoryDetailScreen extends StatelessWidget {
         );
       }
     } catch (e) {
-      PremiumSnackbar.show(context, message: '${context.l10n.errorPickingImage}: $e');
+      PremiumSnackbar.show(context,
+          message: '${context.l10n.errorPickingImage}: $e');
     }
-
   }
 
   @override
@@ -49,7 +48,8 @@ class CategoryDetailScreen extends StatelessWidget {
             expandedHeight: 200,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+              title: Text(title,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
               background: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -82,11 +82,12 @@ class CategoryDetailScreen extends StatelessWidget {
                 children: [
                   Text(
                     l10n.categoryAnalysis(title),
-                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.bold),
                   ).animate().fadeIn().moveY(begin: 20, end: 0),
-                  
+
                   const SizedBox(height: 32),
-                  
+
                   // Action Button
                   SizedBox(
                     width: double.infinity,
@@ -98,31 +99,38 @@ class CategoryDetailScreen extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: category.color,
                         foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
                         elevation: 8,
                         shadowColor: category.color.withOpacity(0.4),
                       ),
                     ),
                   ).animate().fadeIn(delay: 200.ms).scale(),
-                  
+
                   const SizedBox(height: 40),
-                  
+
                   // Tips Section
-                  _buildSectionHeader(l10n.categoryTips, Icons.lightbulb_outline_rounded),
+                  _buildSectionHeader(
+                      l10n.categoryTips, Icons.lightbulb_outline_rounded),
                   const SizedBox(height: 16),
-                  ...category.tipsKeys.map((key) => _buildTipCard(context.translateKey(key))),
-                  
+                  ...category.tipsKeys
+                      .map((key) => _buildTipCard(context.translateKey(key))),
+
                   const SizedBox(height: 32),
-                  
+
                   // Common Issues
-                  _buildSectionHeader(l10n.commonIssues, Icons.report_problem_outlined),
+                  _buildSectionHeader(
+                      l10n.commonIssues, Icons.report_problem_outlined),
                   const SizedBox(height: 16),
                   Wrap(
                     spacing: 12,
                     runSpacing: 12,
-                    children: category.commonIssuesKeys.map((key) => _buildIssueChip(context.translateKey(key))).toList(),
+                    children: category.commonIssuesKeys
+                        .map(
+                            (key) => _buildIssueChip(context.translateKey(key)))
+                        .toList(),
                   ),
-                  
+
                   const SizedBox(height: 100),
                 ],
               ),
@@ -175,7 +183,8 @@ class CategoryDetailScreen extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: TextStyle(color: category.color, fontWeight: FontWeight.bold, fontSize: 14),
+        style: TextStyle(
+            color: category.color, fontWeight: FontWeight.bold, fontSize: 14),
       ),
     ).animate().fadeIn(delay: 500.ms).scale();
   }

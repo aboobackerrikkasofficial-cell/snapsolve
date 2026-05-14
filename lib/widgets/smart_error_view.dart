@@ -39,13 +39,11 @@ class _SmartAnalysisErrorViewState extends State<SmartAnalysisErrorView> {
               _buildErrorTitle(context),
               const SizedBox(height: 12),
               _buildErrorDescription(context),
-              
               if (kDebugMode) ...[
                 const SizedBox(height: 24),
                 _buildDebugToggle(),
                 if (_showDebug) _buildDebugPanel(),
               ],
-              
               const SizedBox(height: 48),
               _buildActionButtons(context),
             ],
@@ -87,7 +85,11 @@ class _SmartAnalysisErrorViewState extends State<SmartAnalysisErrorView> {
         ),
         child: Icon(icon, size: 56, color: color),
       ),
-    ).scale(duration: const Duration(milliseconds: 600), curve: Curves.easeOutBack).shake(delay: const Duration(milliseconds: 500));
+    )
+        .scale(
+            duration: const Duration(milliseconds: 600),
+            curve: Curves.easeOutBack)
+        .shake(delay: const Duration(milliseconds: 500));
   }
 
   Widget _buildErrorTitle(BuildContext context) {
@@ -122,16 +124,20 @@ class _SmartAnalysisErrorViewState extends State<SmartAnalysisErrorView> {
     String desc;
     switch (widget.exception.reason) {
       case AnalysisFailureReason.networkError:
-        desc = 'We couldn\'t reach our AI engine. Please check your internet connection and try again.';
+        desc =
+            'We couldn\'t reach our AI engine. Please check your internet connection and try again.';
         break;
       case AnalysisFailureReason.providerQuotaExceeded:
-        desc = 'High demand is affecting response times. Our system is working to restore full speed.';
+        desc =
+            'High demand is affecting response times. Our system is working to restore full speed.';
         break;
       case AnalysisFailureReason.providerTimeout:
-        desc = 'The screenshot was complex and took longer than expected to process.';
+        desc =
+            'The screenshot was complex and took longer than expected to process.';
         break;
       default:
-        desc = 'Something unexpected happened while scanning your image. Our engineers have been notified.';
+        desc =
+            'Something unexpected happened while scanning your image. Our engineers have been notified.';
     }
 
     return Text(
@@ -153,11 +159,15 @@ class _SmartAnalysisErrorViewState extends State<SmartAnalysisErrorView> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.bug_report_rounded, size: 14, color: Colors.white.withOpacity(0.3)),
+            Icon(Icons.bug_report_rounded,
+                size: 14, color: Colors.white.withOpacity(0.3)),
             const SizedBox(width: 8),
             Text(
               _showDebug ? 'Hide Technical Details' : 'Show Technical Details',
-              style: TextStyle(color: Colors.white.withOpacity(0.3), fontSize: 12, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Colors.white.withOpacity(0.3),
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -179,14 +189,23 @@ class _SmartAnalysisErrorViewState extends State<SmartAnalysisErrorView> {
         children: [
           _debugLine('Stage', widget.exception.debugStage ?? 'Unknown'),
           _debugLine('Reason', widget.exception.reason.toString()),
-          _debugLine('Details', widget.exception.originalError?.toString() ?? 'None'),
+          _debugLine('Summary', widget.exception.diagnosticSummary),
           if (widget.exception.stackTrace != null) ...[
             const Divider(color: Colors.white10),
-            const Text('Stack Trace Preview:', style: TextStyle(color: Colors.white38, fontSize: 10, fontWeight: FontWeight.bold)),
+            const Text('Stack Trace Preview:',
+                style: TextStyle(
+                    color: Colors.white38,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold)),
             const SizedBox(height: 4),
             Text(
-              widget.exception.stackTrace.toString().split('\n').take(5).join('\n'),
-              style: const TextStyle(color: Colors.white24, fontSize: 10, fontFamily: 'monospace'),
+              widget.exception.stackTrace
+                  .toString()
+                  .split('\n')
+                  .take(5)
+                  .join('\n'),
+              style: const TextStyle(
+                  color: Colors.white24, fontSize: 10, fontFamily: 'monospace'),
             ),
           ],
         ],
@@ -200,8 +219,14 @@ class _SmartAnalysisErrorViewState extends State<SmartAnalysisErrorView> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('$label: ', style: const TextStyle(color: Colors.white38, fontSize: 11, fontWeight: FontWeight.bold)),
-          Expanded(child: Text(value, style: const TextStyle(color: Colors.white70, fontSize: 11))),
+          Text('$label: ',
+              style: const TextStyle(
+                  color: Colors.white38,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold)),
+          Expanded(
+              child: Text(value,
+                  style: const TextStyle(color: Colors.white70, fontSize: 11))),
         ],
       ),
     );
@@ -219,10 +244,15 @@ class _SmartAnalysisErrorViewState extends State<SmartAnalysisErrorView> {
           onPressed: widget.onBack,
           child: Text(
             'Return to Home',
-            style: TextStyle(color: Colors.white.withOpacity(0.5), fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: Colors.white.withOpacity(0.5),
+                fontWeight: FontWeight.bold),
           ),
         ),
       ],
-    ).animate().fadeIn(delay: const Duration(milliseconds: 300)).slideY(begin: 0.1, end: 0);
+    )
+        .animate()
+        .fadeIn(delay: const Duration(milliseconds: 300))
+        .slideY(begin: 0.1, end: 0);
   }
 }

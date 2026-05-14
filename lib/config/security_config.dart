@@ -1,19 +1,9 @@
+import 'package:flutter/foundation.dart';
+
 class SecurityConfig {
-  // Use String.fromEnvironment to inject keys during build
-  // Example: flutter run --dart-define=GEMINI_API_KEY=your_key
-  
+  /// The Gemini API Key injected via --dart-define=GEMINI_API_KEY=xxx
   static const String geminiApiKey = String.fromEnvironment(
     'GEMINI_API_KEY',
-    defaultValue: '',
-  );
-  
-  static const String groqApiKey = String.fromEnvironment(
-    'GROQ_API_KEY',
-    defaultValue: '',
-  );
-  
-  static const String openRouterApiKey = String.fromEnvironment(
-    'OPENROUTER_API_KEY',
     defaultValue: '',
   );
 
@@ -23,11 +13,24 @@ class SecurityConfig {
   );
 
   // Security Flags
-  static const bool isProduction = bool.fromEnvironment('dart.vm.product');
+  static const bool isProduction = kReleaseMode;
   static const bool enableSslPinning = isProduction;
   static const bool obfuscateLogs = isProduction;
 
   // Rate Limits
-  static const int maxRequestsPerMinute = 10;
-  static const int maxImageSizeMb = 5;
+  static const int maxRequestsPerMinute = 15;
+  static const int maxImageSizeMb = 4;
+
+  /// Validates the API configuration and returns true if valid.
+  static bool validate() {
+    if (geminiApiKey.isEmpty) {
+      return false;
+    }
+
+    if (geminiApiKey.length < 20) {
+      return false;
+    }
+
+    return true;
+  }
 }

@@ -1,23 +1,5 @@
 import 'dart:convert';
 
-class AnalysisHypothesis {
-  final String description;
-  final double probability;
-
-  AnalysisHypothesis({required this.description, required this.probability});
-
-  Map<String, dynamic> toMap() {
-    return {'description': description, 'probability': probability};
-  }
-
-  factory AnalysisHypothesis.fromMap(Map<String, dynamic> map) {
-    return AnalysisHypothesis(
-      description: map['description'] ?? '',
-      probability: (map['probability'] ?? 0.0).toDouble(),
-    );
-  }
-}
-
 class AnalysisResult {
   final String id;
   final String title;
@@ -41,8 +23,6 @@ class AnalysisResult {
   final List<String>? providers;
   final String? parentId;
   final bool isRefined;
-  final List<String>? followUpQuestions;
-  final List<AnalysisHypothesis>? hypotheses; // New: Ranked Hypotheses
 
   AnalysisResult({
     required this.id,
@@ -67,8 +47,6 @@ class AnalysisResult {
     this.providers,
     this.parentId,
     this.isRefined = false,
-    this.followUpQuestions,
-    this.hypotheses,
   });
 
   Map<String, dynamic> toMap() {
@@ -95,8 +73,6 @@ class AnalysisResult {
       'providers': providers,
       'parentId': parentId,
       'isRefined': isRefined,
-      'followUpQuestions': followUpQuestions,
-      'hypotheses': hypotheses?.map((h) => h.toMap()).toList(),
     };
   }
 
@@ -121,17 +97,15 @@ class AnalysisResult {
       ocrText: map['ocrText'],
       severity: map['severity'],
       fixProbability: map['fixProbability']?.toDouble(),
-      providers: map['providers'] != null ? List<String>.from(map['providers']) : null,
+      providers:
+          map['providers'] != null ? List<String>.from(map['providers']) : null,
       parentId: map['parentId'],
       isRefined: map['isRefined'] ?? false,
-      followUpQuestions: map['followUpQuestions'] != null ? List<String>.from(map['followUpQuestions']) : null,
-      hypotheses: map['hypotheses'] != null 
-        ? List<AnalysisHypothesis>.from((map['hypotheses'] as List).map((h) => AnalysisHypothesis.fromMap(h))) 
-        : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory AnalysisResult.fromJson(String source) => AnalysisResult.fromMap(json.decode(source));
+  factory AnalysisResult.fromJson(String source) =>
+      AnalysisResult.fromMap(json.decode(source));
 }

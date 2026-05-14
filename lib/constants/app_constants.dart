@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class AppConstants {
   static const String appName = 'SnapSolve';
   static const String appVersion = '1.0.0';
-  
+
   // API Endpoints
   static const String baseUrl = 'https://api.snapsolve.ai/v1';
   static const String analyzeEndpoint = '/analyze-screenshot';
-  
+
   // Storage Keys
   static const String keyHistory = 'analysis_history';
   static const String keyDarkMode = 'is_dark_mode';
@@ -19,7 +19,7 @@ class AppConstants {
   static const Duration fastAnimation = Duration(milliseconds: 200);
   static const Duration normalAnimation = Duration(milliseconds: 350);
   static const Duration slowAnimation = Duration(milliseconds: 500);
-  
+
   static const Curve defaultCurve = Curves.easeOutCubic;
   static const Curve snappyCurve = Curves.easeOutQuart;
 

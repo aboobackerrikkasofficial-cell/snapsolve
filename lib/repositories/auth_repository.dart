@@ -29,7 +29,8 @@ class DatabaseAuthRepository implements AuthRepository {
 
     // Security: Check if user is blocked
     if (SecurityMonitor.isUserBlocked(normalizedEmail)) {
-      throw Exception('This account is locked for security reasons. Please contact support.');
+      throw Exception(
+          'This account is locked for security reasons. Please contact support.');
     }
 
     if (kIsWeb) {
@@ -67,7 +68,7 @@ class DatabaseAuthRepository implements AuthRepository {
     });
 
     await _saveSession(user);
-    
+
     await db.update(
       'users',
       {'last_login': DateTime.now().toIso8601String()},
@@ -130,7 +131,7 @@ class DatabaseAuthRepository implements AuthRepository {
   Future<AppUser> _loginWeb(String email, String password) async {
     final rawUsers = await _secureStorage.read('web_users');
     final List<dynamic> users = rawUsers != null ? jsonDecode(rawUsers) : [];
-    
+
     final userMap = users.firstWhere(
       (u) => u['email'] == email,
       orElse: () => throw Exception('No account found with this email.'),
@@ -147,10 +148,11 @@ class DatabaseAuthRepository implements AuthRepository {
     return user;
   }
 
-  Future<AppUser> _registerWeb(String name, String email, String password) async {
+  Future<AppUser> _registerWeb(
+      String name, String email, String password) async {
     final rawUsers = await _secureStorage.read('web_users');
     final List<dynamic> users = rawUsers != null ? jsonDecode(rawUsers) : [];
-    
+
     if (users.any((u) => u['email'] == email)) {
       throw Exception('An account already exists with this email.');
     }
@@ -187,7 +189,7 @@ class DatabaseAuthRepository implements AuthRepository {
       isGuest: true,
       role: 'guest',
     );
-    
+
     await _saveSession(user);
     return user;
   }
@@ -202,7 +204,7 @@ class DatabaseAuthRepository implements AuthRepository {
   Future<AppUser?> getCurrentUser() async {
     final session = await _secureStorage.read('user_session');
     if (session == null) return null;
-    
+
     try {
       return AppUser.fromMap(jsonDecode(session));
     } catch (e) {
@@ -213,7 +215,8 @@ class DatabaseAuthRepository implements AuthRepository {
 
   String _hashPassword(String password, String salt) {
     // Enterprise Security: Double hashing with salt + Pepper
-    final bytes = utf8.encode(password + salt + 'snapsolve_pepper_enterprise_2024');
+    final bytes =
+        utf8.encode(password + salt + 'snapsolve_pepper_enterprise_2024');
     return sha256.convert(bytes).toString();
   }
 

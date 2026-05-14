@@ -5,7 +5,7 @@ import '../utils/app_logger.dart';
 
 class AuthProvider extends ChangeNotifier {
   final AuthRepository _authRepository;
-  
+
   AppUser? _user;
   bool _isLoading = false;
   String? _error;
@@ -23,9 +23,9 @@ class AuthProvider extends ChangeNotifier {
   Future<void> _init() async {
     _isLoading = true;
     notifyListeners();
-    
+
     _user = await _authRepository.getCurrentUser();
-    
+
     _isLoading = false;
     notifyListeners();
   }
@@ -69,9 +69,9 @@ class AuthProvider extends ChangeNotifier {
   Future<void> loginAsGuest() async {
     _isLoading = true;
     notifyListeners();
-    
+
     _user = await _authRepository.loginAsGuest();
-    
+
     _isLoading = false;
     notifyListeners();
   }
@@ -81,7 +81,7 @@ class AuthProvider extends ChangeNotifier {
     _user = null;
     notifyListeners();
   }
-  
+
   void clearError() {
     _error = null;
     notifyListeners();

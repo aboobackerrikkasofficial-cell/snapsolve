@@ -16,11 +16,12 @@ class DatabaseService {
   Future<Database> get database async {
     // Web doesn't use sqflite. This should be caught by repository logic.
     if (kIsWeb) {
-      throw UnsupportedError('sqflite is not supported on Web. Use alternative storage.');
+      throw UnsupportedError(
+          'sqflite is not supported on Web. Use alternative storage.');
     }
 
     if (_database != null) return _database!;
-    
+
     if (_isInitializing) {
       // Wait for existing initialization to finish
       while (_isInitializing) {
@@ -35,7 +36,7 @@ class DatabaseService {
     } finally {
       _isInitializing = false;
     }
-    
+
     return _database!;
   }
 
@@ -54,7 +55,7 @@ class DatabaseService {
 
   Future<void> _onCreate(Database db, int version) async {
     AppLogger.info('Creating database tables...');
-    
+
     await db.execute('''
       CREATE TABLE users (
         id TEXT PRIMARY KEY,
@@ -70,7 +71,7 @@ class DatabaseService {
     ''');
 
     await db.execute('CREATE INDEX idx_users_email ON users(email)');
-    
+
     AppLogger.info('Database setup complete.');
   }
 }

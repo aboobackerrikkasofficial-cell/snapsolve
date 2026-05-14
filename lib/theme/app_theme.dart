@@ -8,7 +8,7 @@ class AppTheme {
   static const Color accentColor = Color(0xFF00D2FF);
   static const Color errorColor = Color(0xFFFF4B4B);
   static const Color successColor = Color(0xFF00C853);
-  
+
   // Light Theme
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,

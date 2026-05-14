@@ -1,12 +1,3 @@
-import 'dart:convert';
-
-class AiHypothesis {
-  final String description;
-  final double probability;
-
-  AiHypothesis({required this.description, required this.probability});
-}
-
 class AiResponse {
   final String providerName;
   final String title;
@@ -27,7 +18,6 @@ class AiResponse {
   final double fixProbability;
   final DateTime timestamp;
   final List<String>? followUpQuestions;
-  final List<AiHypothesis>? hypotheses; // New: Expert ranked hypotheses
 
   AiResponse({
     required this.providerName,
@@ -49,7 +39,6 @@ class AiResponse {
     required this.fixProbability,
     required this.timestamp,
     this.followUpQuestions,
-    this.hypotheses,
   });
 
   AiResponse copyWith({
@@ -72,7 +61,6 @@ class AiResponse {
     double? fixProbability,
     DateTime? timestamp,
     List<String>? followUpQuestions,
-    List<AiHypothesis>? hypotheses,
   }) {
     return AiResponse(
       providerName: providerName ?? this.providerName,
@@ -94,7 +82,6 @@ class AiResponse {
       fixProbability: fixProbability ?? this.fixProbability,
       timestamp: timestamp ?? this.timestamp,
       followUpQuestions: followUpQuestions ?? this.followUpQuestions,
-      hypotheses: hypotheses ?? this.hypotheses,
     );
   }
 }

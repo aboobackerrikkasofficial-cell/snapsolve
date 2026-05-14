@@ -15,25 +15,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPage = 0;
 
   List<OnboardingData> _getPages(BuildContext context) => [
-    OnboardingData(
-      title: context.l10n.onboardingTitle1,
-      description: context.l10n.onboardingDesc1,
-      icon: Icons.upload_file_rounded,
-      color: const Color(0xFF6C63FF),
-    ),
-    OnboardingData(
-      title: context.l10n.onboardingTitle2,
-      description: context.l10n.onboardingDesc2,
-      icon: Icons.psychology_rounded,
-      color: const Color(0xFF00D2FF),
-    ),
-    OnboardingData(
-      title: context.l10n.onboardingTitle3,
-      description: context.l10n.onboardingDesc3,
-      icon: Icons.auto_fix_high_rounded,
-      color: const Color(0xFF00C853),
-    ),
-  ];
+        OnboardingData(
+          title: context.l10n.onboardingTitle1,
+          description: context.l10n.onboardingDesc1,
+          icon: Icons.upload_file_rounded,
+          color: const Color(0xFF6C63FF),
+        ),
+        OnboardingData(
+          title: context.l10n.onboardingTitle2,
+          description: context.l10n.onboardingDesc2,
+          icon: Icons.psychology_rounded,
+          color: const Color(0xFF00D2FF),
+        ),
+        OnboardingData(
+          title: context.l10n.onboardingTitle3,
+          description: context.l10n.onboardingDesc3,
+          icon: Icons.auto_fix_high_rounded,
+          color: const Color(0xFF00C853),
+        ),
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -51,16 +51,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               return OnboardingPage(data: pages[index]);
             },
           ),
-          
           PositionedDirectional(
             top: 60,
             end: 20,
             child: TextButton(
               onPressed: () => _finishOnboarding(),
-              child: Text(context.l10n.skip, style: const TextStyle(color: Colors.grey)),
+              child: Text(context.l10n.skip,
+                  style: const TextStyle(color: Colors.grey)),
             ),
           ),
-          
           PositionedDirectional(
             bottom: 60,
             start: 20,
@@ -77,7 +76,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       height: 8,
                       width: _currentPage == index ? 24 : 8,
                       decoration: BoxDecoration(
-                        color: _currentPage == index ? const Color(0xFF6C63FF) : Colors.grey.withOpacity(0.3),
+                        color: _currentPage == index
+                            ? const Color(0xFF6C63FF)
+                            : Colors.grey.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -101,11 +102,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF6C63FF),
                       foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)),
                     ),
                     child: Text(
-                      _currentPage == pages.length - 1 ? context.l10n.getStarted : context.l10n.continueText,
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      _currentPage == pages.length - 1
+                          ? context.l10n.getStarted
+                          : context.l10n.continueText,
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -158,9 +163,7 @@ class OnboardingPage extends StatelessWidget {
             ),
             child: Icon(data.icon, size: 100, color: data.color),
           ).animate().scale(duration: 600.ms, curve: Curves.easeOutBack),
-          
           const SizedBox(height: 60),
-          
           Text(
             data.title,
             textAlign: TextAlign.center,
@@ -169,9 +172,7 @@ class OnboardingPage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ).animate().fadeIn(delay: 200.ms).moveY(begin: 20, end: 0),
-          
           const SizedBox(height: 20),
-          
           Text(
             data.description,
             textAlign: TextAlign.center,

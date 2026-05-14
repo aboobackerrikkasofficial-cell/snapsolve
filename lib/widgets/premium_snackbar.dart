@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class PremiumSnackbar {
-  static void show(BuildContext context, {
+  static void show(
+    BuildContext context, {
     required String message,
     bool isError = true,
   }) {
@@ -25,12 +26,15 @@ class PremiumSnackbar {
                 color: const Color(0xFF1A1A2E).withOpacity(0.95),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: isError ? Colors.redAccent.withOpacity(0.3) : Colors.greenAccent.withOpacity(0.3),
+                  color: isError
+                      ? Colors.redAccent.withOpacity(0.3)
+                      : Colors.greenAccent.withOpacity(0.3),
                   width: 1.5,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: (isError ? Colors.red : Colors.green).withOpacity(0.1),
+                    color:
+                        (isError ? Colors.red : Colors.green).withOpacity(0.1),
                     blurRadius: 12,
                     spreadRadius: 2,
                   ),
@@ -40,7 +44,9 @@ class PremiumSnackbar {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
-                    isError ? Icons.warning_amber_rounded : Icons.check_circle_outline_rounded,
+                    isError
+                        ? Icons.warning_amber_rounded
+                        : Icons.check_circle_outline_rounded,
                     color: isError ? Colors.redAccent : Colors.greenAccent,
                     size: 20,
                   ),
@@ -60,7 +66,13 @@ class PremiumSnackbar {
                 ],
               ),
             ),
-          ).slideY(begin: 0.5, end: 0, duration: const Duration(milliseconds: 400), curve: Curves.easeOutBack).fadeIn(),
+          )
+              .slideY(
+                  begin: 0.5,
+                  end: 0,
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeOutBack)
+              .fadeIn(),
         ),
       ),
     );

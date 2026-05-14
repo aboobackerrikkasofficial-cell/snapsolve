@@ -39,9 +39,9 @@ class AnalysisProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> analyzeImage(ProblemContext context, {bool isRetry = false}) async {
-    if (_isAnalyzing && !isRetry) return;
-    
+  Future<void> analyzeImage(ProblemContext context,
+      {bool isRetry = false}) async {
+    // Removed block: if (_isAnalyzing && !isRetry) return; to allow overriding from new screens
     if (!isRetry) {
       _retryCount = 0;
     }
@@ -51,30 +51,34 @@ class AnalysisProvider extends ChangeNotifier {
     _currentError = null;
     _currentResult = null;
     notifyListeners();
- 
+
     try {
       AppLogger.info('>>> PIPELINE EXECUTION START (Retry: $_retryCount) <<<');
-      
-      final result = await _apiService.analyzeScreenshot(
-        context: context,
-        onProgress: (msg) {
-          if (_loadingMessage != msg) {
-            _loadingMessage = msg;
-            notifyListeners();
-          }
-        },
-      ).timeout(const Duration(seconds: 90));
-      
+
+      final result = await _apiService
+          .analyzeScreenshot(
+            context: context,
+            onProgress: (msg) {
+              if (_loadingMessage != msg) {
+                _loadingMessage = msg;
+                notifyListeners();
+              }
+            },
+          )
+          .timeout(const Duration(seconds: 90));
+
       _currentResult = result;
       _retryCount = 0;
       await _storageService.saveAnalysis(result);
       _loadHistory();
       AppLogger.info('>>> PIPELINE EXECUTION SUCCESS <<<');
     } on AnalysisException catch (e, stack) {
-      AppLogger.error('PIPELINE RECOVERABLE FAILURE', error: e, stackTrace: stack);
+      AppLogger.error('PIPELINE RECOVERABLE FAILURE',
+          error: e, stackTrace: stack);
       _handleFailure(e, context);
     } catch (e, stack) {
-      AppLogger.error('PIPELINE UNHANDLED CRITICAL FAILURE', error: e, stackTrace: stack);
+      AppLogger.error('PIPELINE UNHANDLED CRITICAL FAILURE',
+          error: e, stackTrace: stack);
       _handleFailure(
         AnalysisException(
           message: 'An unexpected error occurred.',
@@ -97,7 +101,7 @@ class AnalysisProvider extends ChangeNotifier {
     if (e.isRetryable && _retryCount < _maxRetries) {
       _retryCount++;
       AppLogger.info('Retrying analysis ($retryCount/$_maxRetries)...');
-      
+
       Future.delayed(Duration(seconds: 2 * _retryCount), () {
         analyzeImage(context, isRetry: true);
       });
@@ -108,7 +112,7 @@ class AnalysisProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
- 
+
   Future<void> improveAnalysis({
     required AnalysisResult original,
     required String feedback,
@@ -116,12 +120,12 @@ class AnalysisProvider extends ChangeNotifier {
     required String language,
   }) async {
     if (_isAnalyzing) return;
-    
+
     _isAnalyzing = true;
     _loadingMessage = 'improvingAnalysis';
     _currentError = null;
     notifyListeners();
- 
+
     try {
       final refinedResult = await _apiService.improveAnalysis(
         originalResult: original,
@@ -135,7 +139,7 @@ class AnalysisProvider extends ChangeNotifier {
           }
         },
       );
-      
+
       _currentResult = refinedResult;
       await _storageService.saveAnalysis(refinedResult);
       _loadHistory();

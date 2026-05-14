@@ -36,7 +36,8 @@ class AppUser {
       email: map['email'] ?? '',
       profilePicture: map['profilePicture'],
       isGuest: (map['isGuest'] == 1 || map['isGuest'] == true),
-      createdAt: map['createdAt'] != null ? DateTime.parse(map['createdAt']) : null,
+      createdAt:
+          map['createdAt'] != null ? DateTime.parse(map['createdAt']) : null,
       role: map['role'] ?? 'user',
     );
   }

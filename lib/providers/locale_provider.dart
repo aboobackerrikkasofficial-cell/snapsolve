@@ -25,13 +25,13 @@ class LocaleProvider extends ChangeNotifier {
 
   void setLocale(Locale locale) async {
     if (!['en', 'ml', 'hi', 'ta'].contains(locale.languageCode)) return;
-    
+
     _locale = locale;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_localeKey, locale.languageCode);
     notifyListeners();
   }
-  
+
   void clearLocale() {
     _locale = null;
     notifyListeners();

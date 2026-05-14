@@ -48,7 +48,8 @@ class RecentAnalysisCard extends StatelessWidget {
                           width: 60,
                           height: 60,
                           fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) => Container(
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
                             width: 60,
                             height: 60,
                             color: Colors.grey[300],
@@ -60,7 +61,8 @@ class RecentAnalysisCard extends StatelessWidget {
                           width: 60,
                           height: 60,
                           fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) => Container(
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
                             width: 60,
                             height: 60,
                             color: Colors.grey[300],
@@ -75,7 +77,8 @@ class RecentAnalysisCard extends StatelessWidget {
                     children: [
                       Text(
                         result.title,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -88,7 +91,10 @@ class RecentAnalysisCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        DateFormat.yMMMd(Localizations.localeOf(context).toString()).add_jm().format(result.timestamp),
+                        DateFormat.yMMMd(
+                                Localizations.localeOf(context).toString())
+                            .add_jm()
+                            .format(result.timestamp),
                         style: TextStyle(fontSize: 12, color: Colors.grey[400]),
                       ),
                     ],

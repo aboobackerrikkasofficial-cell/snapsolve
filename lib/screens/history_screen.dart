@@ -19,7 +19,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     final provider = Provider.of<AnalysisProvider>(context);
     final history = provider.history.where((item) {
       return item.title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-             item.meaning.toLowerCase().contains(_searchQuery.toLowerCase());
+          item.meaning.toLowerCase().contains(_searchQuery.toLowerCase());
     }).toList();
 
     return Scaffold(
@@ -51,35 +51,35 @@ class _HistoryScreenState extends State<HistoryScreen> {
               ),
             ),
           ),
-          
           Expanded(
             child: history.isEmpty
-              ? _buildEmptyState()
-              : ListView.separated(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: history.length,
-                  separatorBuilder: (context, index) => const SizedBox(height: 12),
-                  itemBuilder: (context, index) {
-                    final item = history[index];
-                    return Dismissible(
-                      key: Key(item.id),
-                      direction: DismissDirection.endToStart,
-                      background: Container(
-                        alignment: Alignment.centerRight,
-                        padding: const EdgeInsetsDirectional.only(end: 20),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(16),
+                ? _buildEmptyState()
+                : ListView.separated(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: history.length,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+                      final item = history[index];
+                      return Dismissible(
+                        key: Key(item.id),
+                        direction: DismissDirection.endToStart,
+                        background: Container(
+                          alignment: Alignment.centerRight,
+                          padding: const EdgeInsetsDirectional.only(end: 20),
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: const Icon(Icons.delete, color: Colors.white),
                         ),
-                        child: const Icon(Icons.delete, color: Colors.white),
-                      ),
-                      onDismissed: (direction) {
-                        provider.deleteAnalysis(item.id);
-                      },
-                      child: RecentAnalysisCard(result: item),
-                    );
-                  },
-                ),
+                        onDismissed: (direction) {
+                          provider.deleteAnalysis(item.id);
+                        },
+                        child: RecentAnalysisCard(result: item),
+                      );
+                    },
+                  ),
           ),
         ],
       ),
@@ -94,7 +94,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
           Icon(Icons.history_rounded, size: 80, color: Colors.grey[300]),
           const SizedBox(height: 16),
           Text(
-            _searchQuery.isEmpty ? context.l10n.noHistoryYet : context.l10n.noResultsFound,
+            _searchQuery.isEmpty
+                ? context.l10n.noHistoryYet
+                : context.l10n.noResultsFound,
             style: TextStyle(fontSize: 18, color: Colors.grey[600]),
           ),
         ],
@@ -109,13 +111,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
         title: Text(context.l10n.clearHistoryTitle),
         content: Text(context.l10n.clearHistoryMessage),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: Text(context.l10n.cancel)),
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(context.l10n.cancel)),
           TextButton(
             onPressed: () {
               provider.clearHistory();
               Navigator.pop(context);
             },
-            child: Text(context.l10n.clearAll, style: const TextStyle(color: Colors.red)),
+            child: Text(context.l10n.clearAll,
+                style: const TextStyle(color: Colors.red)),
           ),
         ],
       ),

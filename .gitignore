@@ -74,6 +74,7 @@ app.*.map.json
 !.env.example
 secrets.json
 auth_config.json
+config.json
 
 # Backend Specific (Node/Python/Docker)
 backend/node_modules/

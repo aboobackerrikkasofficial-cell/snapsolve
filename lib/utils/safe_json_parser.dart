@@ -14,12 +14,13 @@ class SafeJsonParser {
           clean = lines.sublist(1, lines.length - 1).join('\n');
         }
       }
-      
+
       // 2. Final trim and standard parse
       clean = clean.trim();
       return json.decode(clean);
     } catch (e) {
-      AppLogger.warning('Standard JSON parse failed, attempting regex extraction: $e');
+      AppLogger.warning(
+          'Standard JSON parse failed, attempting regex extraction: $e');
       return _attemptRegexExtraction(raw);
     }
   }

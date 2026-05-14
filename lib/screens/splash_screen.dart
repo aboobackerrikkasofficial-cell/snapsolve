@@ -26,15 +26,18 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 3));
     if (!mounted) return;
 
-    final analysisProvider = Provider.of<AnalysisProvider>(context, listen: false);
-    final storage = Provider.of<AnalysisProvider>(context, listen: false); // Just to ensure context
-    
+    final analysisProvider =
+        Provider.of<AnalysisProvider>(context, listen: false);
+    final storage = Provider.of<AnalysisProvider>(context,
+        listen: false); // Just to ensure context
+
     // In a real app, you'd check storage via a dedicated service or provider
     // For now, let's assume onboarding logic
-    
+
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => const OnboardingScreen(),
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const OnboardingScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(opacity: animation, child: child);
         },
@@ -63,12 +66,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 color: Color(0xFF6C63FF),
               ),
             )
-            .animate()
-            .scale(duration: 1.seconds, curve: Curves.elasticOut)
-            .fadeIn(duration: 800.ms),
-            
+                .animate()
+                .scale(duration: 1.seconds, curve: Curves.elasticOut)
+                .fadeIn(duration: 800.ms),
             const SizedBox(height: 24),
-            
             Text(
               context.l10n.appName,
               style: const TextStyle(
@@ -78,21 +79,17 @@ class _SplashScreenState extends State<SplashScreen> {
                 letterSpacing: 2,
               ),
             )
-            .animate()
-            .fadeIn(delay: 500.ms, duration: 800.ms)
-            .moveY(begin: 20, end: 0, curve: Curves.easeOutQuad),
-            
+                .animate()
+                .fadeIn(delay: 500.ms, duration: 800.ms)
+                .moveY(begin: 20, end: 0, curve: Curves.easeOutQuad),
             const SizedBox(height: 8),
-            
             Text(
               context.l10n.aiPoweredSolutions,
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.white.withOpacity(0.5),
               ),
-            )
-            .animate()
-            .fadeIn(delay: 800.ms, duration: 800.ms),
+            ).animate().fadeIn(delay: 800.ms, duration: 800.ms),
           ],
         ),
       ),

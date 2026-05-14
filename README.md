@@ -60,12 +60,12 @@ SnapSolve follows a strict **Clean Architecture** pattern:
    ```
 
 2. **Setup Environment Variables**:
-   Create a `.env` file or use `--dart-define`:
-   ```bash
-   # Example .env
-   GEMINI_API_KEY=your_key
-   GROQ_API_KEY=your_key
-   OPENROUTER_API_KEY=your_key
+   Create a `config.json` file in the root directory:
+   ```json
+   {
+     "GEMINI_API_KEY": "your_gemini_api_key",
+     "API_BASE_URL": "https://api.snapsolve.ai/v1"
+   }
    ```
 
 3. **Install Dependencies**:
@@ -76,10 +76,10 @@ SnapSolve follows a strict **Clean Architecture** pattern:
 4. **Run the App**:
    ```bash
    # Running on Chrome
-   flutter run -d chrome --dart-define=GEMINI_API_KEY=xxx ...
+   flutter run -d chrome --dart-define-from-file=config.json
 
    # Running on Android
-   flutter run -d android
+   flutter run -d android --dart-define-from-file=config.json
    ```
 
 ---

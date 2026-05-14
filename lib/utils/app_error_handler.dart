@@ -8,7 +8,8 @@ class AppErrorHandler {
   static void init() {
     // 1. Capture Flutter framework errors
     FlutterError.onError = (details) {
-      AppLogger.error('Flutter Framework Error', error: details.exception, stackTrace: details.stack);
+      AppLogger.error('Flutter Framework Error',
+          error: details.exception, stackTrace: details.stack);
       // In production, we override the red screen
     };
 
@@ -32,13 +33,16 @@ class AppErrorHandler {
     final errorString = error.toString();
     final lowerError = errorString.toLowerCase();
 
-    if (lowerError.contains('socketexception') || lowerError.contains('network_error')) {
+    if (lowerError.contains('socketexception') ||
+        lowerError.contains('network_error')) {
       return 'Network connection unavailable. Please check your internet.';
     }
-    if (lowerError.contains('databasefactory') || lowerError.contains('sqflite')) {
+    if (lowerError.contains('databasefactory') ||
+        lowerError.contains('sqflite')) {
       return 'Local storage failed to initialize. Please restart the app.';
     }
-    if (lowerError.contains('api key') || lowerError.contains('invalidapikey')) {
+    if (lowerError.contains('api key') ||
+        lowerError.contains('invalidapikey')) {
       return 'Security configuration error. Please contact support.';
     }
     if (lowerError.contains('quota') || lowerError.contains('rate limit')) {
@@ -94,7 +98,7 @@ class GlobalErrorView extends StatelessWidget {
               ),
             ),
           ),
-          
+
           Center(
             child: Padding(
               padding: const EdgeInsets.all(40),
@@ -116,10 +120,14 @@ class GlobalErrorView extends StatelessWidget {
                         size: 48,
                       ),
                     ),
-                  ).scale(duration: const Duration(milliseconds: 400), curve: Curves.easeOutBack).shake(delay: const Duration(milliseconds: 400)),
-                  
+                  )
+                      .scale(
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.easeOutBack)
+                      .shake(delay: const Duration(milliseconds: 400)),
+
                   const SizedBox(height: 40),
-                  
+
                   const Text(
                     'App Encountered a Problem',
                     style: TextStyle(
@@ -129,9 +137,9 @@ class GlobalErrorView extends StatelessWidget {
                       letterSpacing: 0.5,
                     ),
                   ),
-                  
+
                   const SizedBox(height: 16),
-                  
+
                   Text(
                     message,
                     textAlign: TextAlign.center,
@@ -141,9 +149,9 @@ class GlobalErrorView extends StatelessWidget {
                       height: 1.5,
                     ),
                   ),
-                  
+
                   const SizedBox(height: 48),
-                  
+
                   // Compact Recovery Button
                   SizedBox(
                     width: 200,
@@ -158,10 +166,12 @@ class GlobalErrorView extends StatelessWidget {
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
-                          side: BorderSide(color: Colors.redAccent.withOpacity(0.3)),
+                          side: BorderSide(
+                              color: Colors.redAccent.withOpacity(0.3)),
                         ),
                       ),
-                      child: const Text('Restart App', style: TextStyle(fontWeight: FontWeight.bold)),
+                      child: const Text('Restart App',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
                     ),
                   ),
                 ],

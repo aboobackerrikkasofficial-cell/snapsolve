@@ -17,39 +17,42 @@ import 'services/database_initializer.dart';
 import 'utils/app_error_handler.dart';
 import 'services/secure_storage_service.dart';
 
+import 'config/security_config.dart';
+import 'utils/app_logger.dart';
 
 void main() async {
   // 1. Initialize Global Error Handling
   AppErrorHandler.init();
-  
+
   // 2. Ensure Flutter is ready
   WidgetsFlutterBinding.ensureInitialized();
 
+  // 3. Validate Configuration
+  SecurityConfig.validate();
+
   // 3. Initialize Cross-Platform Database
   await DatabaseInitializer.initialize();
-  
+
   // 4. Initialize Storage Services
   final storageService = StorageService();
   await storageService.init();
 
   final secureStorage = SecureStorageService();
   await secureStorage.init();
-  
+
   // 5. Initialize API and Repositories
   final apiService = ApiService();
   final authRepository = DatabaseAuthRepository(secureStorage);
 
   runApp(
-
-
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider(authRepository)),
         ChangeNotifierProvider(create: (_) => ThemeProvider(storageService)),
-        ChangeNotifierProvider(create: (_) => AnalysisProvider(apiService, storageService)),
+        ChangeNotifierProvider(
+            create: (_) => AnalysisProvider(apiService, storageService)),
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
       ],
-
       child: const SnapSolveApp(),
     ),
   );
@@ -62,7 +65,7 @@ class SnapSolveApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final localeProvider = Provider.of<LocaleProvider>(context);
-    
+
     return MaterialApp(
       title: 'SnapSolve',
       debugShowCheckedModeBanner: false,

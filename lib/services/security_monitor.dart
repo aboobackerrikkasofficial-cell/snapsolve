@@ -6,8 +6,9 @@ class SecurityMonitor {
 
   static void trackViolation(String userId, String violationType) {
     _violationCounts[userId] = (_violationCounts[userId] ?? 0) + 1;
-    
-    AppLogger.warning('SECURITY VIOLATION: Type: $violationType, User: $userId, Count: ${_violationCounts[userId]}');
+
+    AppLogger.warning(
+        'SECURITY VIOLATION: Type: $violationType, User: $userId, Count: ${_violationCounts[userId]}');
 
     if (_violationCounts[userId]! >= _banThreshold) {
       _triggerAccountLockdown(userId);
@@ -19,7 +20,8 @@ class SecurityMonitor {
   }
 
   static void _triggerAccountLockdown(String userId) {
-    AppLogger.error('CRITICAL: Account Lockdown triggered for user $userId due to repeated security violations.');
+    AppLogger.error(
+        'CRITICAL: Account Lockdown triggered for user $userId due to repeated security violations.');
     // In production, this would call a backend API to disable the account
   }
 }
