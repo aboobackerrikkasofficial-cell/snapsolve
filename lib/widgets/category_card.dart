@@ -50,10 +50,12 @@ class CategoryCard extends StatelessWidget {
               Text(
                 context.translateKey(category.titleKey),
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w800,
                   fontSize: 14,
-                  color: Colors.white,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white
+                      : Colors.black87,
                   letterSpacing: -0.2,
                 ),
                 maxLines: 1,

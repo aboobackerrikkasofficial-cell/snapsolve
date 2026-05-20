@@ -6,6 +6,7 @@ import '../providers/auth_provider.dart';
 import '../providers/analysis_provider.dart';
 import '../providers/locale_provider.dart';
 import 'auth/login_screen.dart';
+import 'auth/register_screen.dart';
 import 'privacy_policy_screen.dart';
 import 'terms_of_service_screen.dart';
 
@@ -59,7 +60,17 @@ class SettingsScreen extends StatelessWidget {
             subtitle: Text(authProvider.user?.email ?? l10n.connectYourAccount),
             leading: const Icon(Icons.person_rounded),
             trailing: authProvider.user?.isGuest ?? true
-                ? TextButton(onPressed: () {}, child: Text(l10n.signUp))
+                ? TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterScreen(),
+                        ),
+                      );
+                    },
+                    child: Text(l10n.signUp),
+                  )
                 : null,
           ),
           _SectionHeader(title: l10n.storage),

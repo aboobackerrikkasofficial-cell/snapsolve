@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../models/analysis_exception.dart';
 import '../widgets/premium_core.dart';
-import '../localization/localization_extension.dart';
+
 
 class SmartAnalysisErrorView extends StatefulWidget {
   final AnalysisException exception;
@@ -111,8 +111,10 @@ class _SmartAnalysisErrorViewState extends State<SmartAnalysisErrorView> {
     return Text(
       title,
       textAlign: TextAlign.center,
-      style: const TextStyle(
-        color: Colors.white,
+      style: TextStyle(
+        color: Theme.of(context).brightness == Brightness.dark
+            ? Colors.white
+            : Colors.black87,
         fontSize: 22,
         fontWeight: FontWeight.w900,
         letterSpacing: -0.5,
@@ -144,7 +146,9 @@ class _SmartAnalysisErrorViewState extends State<SmartAnalysisErrorView> {
       desc,
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: Colors.white.withOpacity(0.5),
+        color: Theme.of(context).brightness == Brightness.dark
+            ? Colors.white.withOpacity(0.5)
+            : Colors.black54,
         fontSize: 15,
         height: 1.5,
       ),
@@ -245,7 +249,9 @@ class _SmartAnalysisErrorViewState extends State<SmartAnalysisErrorView> {
           child: Text(
             'Return to Home',
             style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white.withOpacity(0.5)
+                    : Colors.black45,
                 fontWeight: FontWeight.bold),
           ),
         ),

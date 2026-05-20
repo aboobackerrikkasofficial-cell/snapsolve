@@ -95,13 +95,16 @@ class ApiService {
     } on GenerativeAIException catch (e, stack) {
       AppLogger.error('Gemini SDK Exception', error: e, stackTrace: stack);
 
-      AnalysisFailureReason reason = AnalysisFailureReason.unknown;
-      if (e.message.contains('API key'))
+      var reason = AnalysisFailureReason.unknown;
+      if (e.message.contains('API key')) {
         reason = AnalysisFailureReason.invalidApiKey;
-      if (e.message.contains('quota') || e.message.contains('429'))
+      }
+      if (e.message.contains('quota') || e.message.contains('429')) {
         reason = AnalysisFailureReason.providerQuotaExceeded;
-      if (e.message.contains('safety'))
+      }
+      if (e.message.contains('safety')) {
         reason = AnalysisFailureReason.safetyFilterBlocked;
+      }
 
       throw AnalysisException(
         message: 'Gemini AI Error: ${e.message}',
@@ -157,24 +160,48 @@ class ApiService {
 
   String _buildRefinementPrompt(
       AnalysisResult original, String feedback, String language) {
-    // Aggressively shortened refinement prompt for blazing fast response
     return '''
-Update diagnosis based on user feedback: "$feedback"
-Prev Title: ${original.title}
-Lang: $language
-Return ONLY JSON:
-{"title":"short diagnosis","issue":"brief explanation","reason":"root cause","steps":["fix step 1","step 2"]}
+You are SnapSolve AI. The user provided additional context about their problem.
+Original diagnosis: "${original.title}"
+User's additional details: "$feedback"
+Response language: $language
+
+Using this new context, provide an improved and more accurate diagnosis.
+Return ONLY a valid JSON object:
+{
+  "title": "Improved problem title",
+  "issue": "Updated explanation with user context incorporated",
+  "reason": "Refined root cause based on new information",
+  "steps": ["Targeted Step 1", "Step 2", "Step 3"]
+}
 ''';
   }
 
   String _buildExpertSystemPrompt(ProblemContext context) {
-    // Aggressively shortened prompt for minimum token overhead and maximum speed
+    final categoryContext = context.category != null
+        ? 'This is a ${context.category!.toUpperCase()} related screenshot.'
+        : 'Analyze the screenshot to determine the relevant category.';
+
+    final userContext = context.userDescription != null &&
+            context.userDescription!.isNotEmpty
+        ? 'User reported: "${context.userDescription}"'
+        : 'No additional context provided.';
+
     return '''
-Analyze this screenshot and identify the technical failure.
-Context: ${context.userDescription ?? 'None'}
-Lang: ${context.language}
-Return ONLY JSON with these exact keys:
-{"title":"short diagnosis","issue":"brief technical explanation","reason":"root cause","steps":["fix step 1","step 2"]}
+You are SnapSolve AI — an expert technical diagnostic engine.
+$categoryContext
+$userContext
+Response language: ${context.language}
+
+Analyze this screenshot and provide a precise technical diagnosis.
+Return ONLY a valid JSON object with these exact keys — no markdown, no extra text:
+{
+  "title": "Short problem title (max 8 words)",
+  "issue": "Clear explanation of what the error/problem is (2-3 sentences)",
+  "reason": "Root cause explanation — why this happened (1-2 sentences)",
+  "steps": ["Step 1: Specific action", "Step 2: Next action", "Step 3: Verification"]
+}
+Ensure steps are actionable, numbered, and specific to the detected problem.
 ''';
   }
 

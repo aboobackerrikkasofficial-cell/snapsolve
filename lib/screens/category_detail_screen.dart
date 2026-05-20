@@ -88,7 +88,7 @@ class CategoryDetailScreen extends StatelessWidget {
 
                   const SizedBox(height: 32),
 
-                  // Action Button
+                  // Primary Action - Gallery
                   SizedBox(
                     width: double.infinity,
                     height: 64,
@@ -106,6 +106,29 @@ class CategoryDetailScreen extends StatelessWidget {
                       ),
                     ),
                   ).animate().fadeIn(delay: 200.ms).scale(),
+
+                  const SizedBox(height: 12),
+
+                  // Secondary Action - Camera
+                  SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: OutlinedButton.icon(
+                      onPressed: () => _pickImage(context, ImageSource.camera),
+                      icon: Icon(Icons.camera_alt_rounded,
+                          color: category.color),
+                      label: Text(
+                        l10n.captureNow,
+                        style: TextStyle(color: category.color),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        side:
+                            BorderSide(color: category.color.withOpacity(0.5)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                      ),
+                    ),
+                  ).animate().fadeIn(delay: 300.ms),
 
                   const SizedBox(height: 40),
 

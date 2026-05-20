@@ -32,7 +32,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
             _buildSection(context, 'Security',
                 'We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorized way, altered or disclosed.'),
             _buildSection(context, 'Contact Information',
-                'If you have any questions about this privacy policy or our privacy practices, please contact us at support@snapsolve.example.com.'),
+                'If you have any questions about this privacy policy or our privacy practices, please contact us at support@snapsolve.ai.'),
             const SizedBox(height: 40),
           ],
         ),

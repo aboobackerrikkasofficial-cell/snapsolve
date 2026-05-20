@@ -34,7 +34,7 @@ class TermsOfServiceScreen extends StatelessWidget {
             _buildSection(context, 'Updates to Terms',
                 'We reserve the right, at our sole discretion, to modify or replace these Terms at any time. By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms.'),
             _buildSection(context, 'Contact',
-                'If you have any questions about these Terms, please contact us at terms@snapsolve.example.com.'),
+                'If you have any questions about these Terms, please contact us at terms@snapsolve.ai.'),
             const SizedBox(height: 40),
           ],
         ),

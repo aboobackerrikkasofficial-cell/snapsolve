@@ -1,9 +1,9 @@
 name: snapsolve_ai
-description: "SnapSolve AI: Intelligent Troubleshooting Recovery Engine. High-accuracy, domain-specific AI diagnostics for complex failures."
-version: 1.0.0+1
-homepage: https://github.com/yourusername/snapsolve-ai
-repository: https://github.com/yourusername/snapsolve-ai
-issue_tracker: https://github.com/yourusername/snapsolve-ai/issues
+description: "SnapSolve — AI-powered screen diagnostic tool. Upload any screenshot and get instant, step-by-step fixes powered by advanced AI."
+version: 1.0.1+2
+homepage: https://snapsolve.ai
+repository: https://github.com/snapsolve/snapsolve-ai
+issue_tracker: https://github.com/snapsolve/snapsolve-ai/issues
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

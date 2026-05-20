@@ -38,6 +38,10 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
       _isInitialized = true;
       if (widget.result == null && widget.imageFile != null) {
         _startInitialAnalysis();
+      } else if (widget.result != null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          context.read<AnalysisProvider>().setCurrentResult(widget.result!);
+        });
       }
     }
   }
@@ -102,7 +106,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0F0F1E),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -191,16 +195,23 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'What happened?',
             style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black87),
           ),
           const SizedBox(height: 8),
           Text(
             'Add context to help the AI recover your app faster.',
-            style:
-                TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.5)),
+            style: TextStyle(
+                fontSize: 14,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white.withOpacity(0.5)
+                    : Colors.black54),
           ),
           const SizedBox(height: 24),
           ProblemDescriptionInput(
@@ -447,7 +458,9 @@ class _ResultInfoSection extends StatelessWidget {
               Text(content,
                   style: TextStyle(
                       fontSize: 15,
-                      color: Colors.white.withOpacity(0.9),
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white.withOpacity(0.9)
+                          : Colors.black87,
                       height: 1.7)),
             ],
           ),
@@ -505,8 +518,10 @@ class _StepsSection extends StatelessWidget {
                         const SizedBox(width: 16),
                         Expanded(
                             child: Text(e.value,
-                                style: const TextStyle(
-                                    color: Colors.white,
+                                style: TextStyle(
+                                    color: Theme.of(context).brightness == Brightness.dark
+                                        ? Colors.white
+                                        : Colors.black87,
                                     fontSize: 15,
                                     height: 1.6))),
                       ],
@@ -557,8 +572,12 @@ class _WarningSection extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(content!,
-                style: const TextStyle(
-                    color: Colors.white70, fontSize: 14, height: 1.6)),
+                style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white70
+                        : Colors.black87,
+                    fontSize: 14,
+                    height: 1.6)),
           ],
         ),
       ),
@@ -603,17 +622,23 @@ class _ExpandableRefinementPanelState
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Need a more accurate fix?',
                           style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).brightness == Brightness.dark
+                                  ? Colors.white
+                                  : Colors.black87,
                               fontWeight: FontWeight.bold,
                               fontSize: 16),
                         ),
                         const SizedBox(height: 6),
                         Text(
                           'Add extra details to improve AI troubleshooting accuracy.',
-                          style: TextStyle(color: Colors.white70, fontSize: 13),
+                          style: TextStyle(
+                              color: Theme.of(context).brightness == Brightness.dark
+                                  ? Colors.white70
+                                  : Colors.black54,
+                              fontSize: 13),
                         ),
                         if (!_isExpanded) ...[
                           const SizedBox(height: 12),

@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
     int crossAxisCount = screenWidth > 1200 ? 4 : (screenWidth > 800 ? 3 : 2);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0F0F1E),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -69,15 +69,17 @@ class _HomeScreenState extends State<HomeScreen> {
             expandedHeight: 140,
             floating: true,
             pinned: true,
-            backgroundColor: const Color(0xFF0F0F1E),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             elevation: 0,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
                 context.l10n.appName,
-                style: const TextStyle(
+                style: TextStyle(
                     fontWeight: FontWeight.w800,
                     letterSpacing: -0.5,
-                    color: Colors.white),
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black87),
               ),
               centerTitle: false,
               titlePadding:
@@ -113,10 +115,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     Animate(
                       child: Text(
                         '${context.l10n.hello}, ${authProvider.user?.name ?? context.l10n.guest} 👋',
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.w900,
-                            color: Colors.white),
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white
+                                : Colors.black87),
                       ),
                     ).fadeIn().slideX(begin: -0.05, end: 0),
 
@@ -127,7 +131,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         context.l10n.whatIssueSolving,
                         style: TextStyle(
                             fontSize: 16,
-                            color: Colors.white.withOpacity(0.5),
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white.withOpacity(0.5)
+                                : Colors.black54,
                             fontWeight: FontWeight.w500),
                       ),
                     ).fadeIn(delay: const Duration(milliseconds: 100)),
@@ -236,6 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildEmptyState() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Animate(
       child: Center(
         child: Padding(
@@ -245,17 +252,24 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.02),
+                  color: isDark
+                      ? Colors.white.withOpacity(0.03)
+                      : Colors.black.withOpacity(0.03),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(Icons.auto_awesome_mosaic_rounded,
-                    size: 64, color: Colors.white.withOpacity(0.1)),
+                    size: 64,
+                    color: isDark
+                        ? Colors.white.withOpacity(0.15)
+                        : Colors.black.withOpacity(0.15)),
               ),
               const SizedBox(height: 24),
               Text(
                 context.l10n.noRecentAnalyses,
                 style: TextStyle(
-                    color: Colors.white.withOpacity(0.3),
+                    color: isDark
+                        ? Colors.white.withOpacity(0.35)
+                        : Colors.black38,
                     fontSize: 16,
                     fontWeight: FontWeight.w500),
               ),
@@ -302,16 +316,20 @@ class _HeroActionCard extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(title,
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w900,
-                      color: Colors.white)),
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : Colors.black87)),
               const SizedBox(height: 6),
               Text(
                 subtitle,
                 style: TextStyle(
                     fontSize: 14,
-                    color: Colors.white.withOpacity(0.5),
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white.withOpacity(0.5)
+                        : Colors.black54,
                     fontWeight: FontWeight.w500),
               ),
             ],
@@ -335,10 +353,12 @@ class _SectionHeader extends StatelessWidget {
     return Animate(
       child: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w800,
-            color: Colors.white,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.black87,
             letterSpacing: -0.5),
       ),
     ).fadeIn(delay: delay);
@@ -356,7 +376,11 @@ class _NavActionIcon extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: IconButton(
-        icon: Icon(icon, color: Colors.white.withOpacity(0.8), size: 24),
+        icon: Icon(icon,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white.withOpacity(0.8)
+                : Colors.black87,
+            size: 24),
         onPressed: onTap,
       ),
     );

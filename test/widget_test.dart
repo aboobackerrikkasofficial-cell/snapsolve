@@ -1,30 +1,32 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:snapsolve_ai/main.dart';
+import 'package:snapsolve_ai/widgets/premium_core.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const SnapSolveApp());
+  testWidgets('PremiumButton displays child and handles taps', (WidgetTester tester) async {
+    bool tapped = false;
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Build the PremiumButton widget
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: PremiumButton(
+            onPressed: () {
+              tapped = true;
+            },
+            child: const Text('Submit Solution'),
+          ),
+        ),
+      ),
+    );
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    // Verify that the child text is displayed
+    expect(find.text('Submit Solution'), findsOneWidget);
+
+    // Tap the button and verify the callback is executed
+    await tester.tap(find.text('Submit Solution'));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(tapped, isTrue);
   });
 }

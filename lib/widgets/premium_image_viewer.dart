@@ -4,7 +4,7 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'dart:io' as io;
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_animate/flutter_animate.dart';
+
 
 class PremiumImageViewer extends StatelessWidget {
   final List<String> imageUrls;
