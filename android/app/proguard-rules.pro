@@ -10,10 +10,10 @@
 
 # 2. Obfuscate application classes
 # We keep the entry point but obfuscate everything else
--keep class com.snapsolve.ai.MainActivity { *; }
+-keep class com.snapsolve.MainActivity { *; }
 
 # 3. Protect sensitive models from field renaming if they use reflection (JSON)
--keepclassmembers class * extends com.snapsolve.ai.models.** {
+-keepclassmembers class * extends com.snapsolve.models.** {
     <fields>;
     <methods>;
 }
